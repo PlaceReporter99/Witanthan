@@ -1,3 +1,3 @@
 import main
 if __name__ == "__main__":
-    main.run("Code: ", "Input: ")
+    main.run("", input("Code: "), input("Input: "))

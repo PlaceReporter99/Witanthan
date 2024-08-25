@@ -1,14 +1,36 @@
+import instructions
 # Codes 0 to 127: Dynamic Instructions
 # Codes 128 to 255: Instruction Modifiers
-def mapcpage(nums): # We're using braille chars
-    l = []
-    for x in nums:
-        if x == 32:
-            l.append(0)
-        else:
-            l.append(x - 10240)
-    return [x - 10240 for x in nums]
+def codedict():
+    a = []
+    b = [*range(256)]
+    d = {}
+    for x in range(32, 127):
+        a.append(chr(x))
+    for x in range(161, 173):
+        a.append(chr(x))
+    for x in range(174, 323):
+        a.append(chr(x))
+    for x in b:
+        d.update({a[b]: b})
+    return a
 
-def run(code, inp):
-    code = mapcpage([chr(x) for x in code])
-    return 'not implemented'
+def mapcpage(nums):
+    l = []
+    d = codedict()
+    for x in nums:
+        try:
+            l.append(d[x])
+        except:
+            pass
+    return l
+
+def run(flag, code, inp):
+    code = mapcpage([ord(x) for x in code])
+    stack = [inp]
+    mod = 255
+    for x in code:
+        if x <= 127:
+            instructions.instructions[mod][x](stack)
+        else:
+            mod = x 
